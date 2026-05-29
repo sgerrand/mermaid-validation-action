@@ -23,6 +23,14 @@ pre-commit:
         - CHANGELOG.md
       run: mado check {staged_files}
 
+    - name: workflows
+      glob: '.github/workflows/*.{yml,yaml}'
+      run: actionlint {staged_files}
+
+    - name: dependabot
+      glob: '.github/dependabot.{yml,yaml}'
+      run: check-jsonschema --builtin-schema vendor.dependabot {staged_files}
+
     - name: dist-sync
       run: |
         set -e

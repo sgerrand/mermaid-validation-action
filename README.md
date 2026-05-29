@@ -101,15 +101,17 @@ The `dist/index.js` bundle is checked in because Node-based GitHub Actions run f
 
 ### Local hooks
 
-`bun install` wires up [lefthook](https://github.com/evilmartians/lefthook) automatically via the `prepare` script. The hooks call three Rust binaries that are not on npm — install them once via Homebrew:
+`bun install` wires up [lefthook](https://github.com/evilmartians/lefthook) automatically via the `prepare` script. The hooks call five external binaries — install them once via Homebrew:
 
 ```bash
-brew install gitleaks mado
+brew install gitleaks mado actionlint check-jsonschema
 brew install crate-ci/committed/committed
 ```
 
 - `gitleaks` — scans staged content for secrets on every commit.
 - `mado` — markdownlint-compatible Markdown lint.
+- `actionlint` — schema + expression + shellcheck lint for GitHub Actions workflows.
+- `check-jsonschema` — JSON Schema validation for `dependabot.yml` (and anything else with a SchemaStore entry).
 - `committed` — Conventional Commits check on commit messages.
 
 If any of these is missing the matching hook fails fast; the rest still run.
