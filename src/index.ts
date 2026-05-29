@@ -6,11 +6,7 @@ import * as glob from '@actions/glob';
 import { extractBlocks } from './extractBlocks.js';
 import { detectType } from './detectType.js';
 import { validate } from './validate.js';
-import {
-  emitAnnotations,
-  emitJobSummary,
-  upsertPrComment,
-} from './report.js';
+import { emitAnnotations, emitJobSummary, upsertPrComment } from './report.js';
 import type { Failure, ValidationStats } from './types.js';
 
 interface Inputs {
@@ -31,10 +27,7 @@ function readInputs(): Inputs {
   };
 }
 
-async function resolveFiles(
-  patterns: string,
-  cwd: string,
-): Promise<string[]> {
+async function resolveFiles(patterns: string, cwd: string): Promise<string[]> {
   const absoluteCwd = path.resolve(cwd);
   const lines = patterns
     .split(/\r?\n/)
@@ -44,7 +37,9 @@ async function resolveFiles(
     .map((line) => {
       if (line.startsWith('!')) {
         const body = line.slice(1);
-        return path.isAbsolute(body) ? line : `!${path.join(absoluteCwd, body)}`;
+        return path.isAbsolute(body)
+          ? line
+          : `!${path.join(absoluteCwd, body)}`;
       }
       return path.isAbsolute(line) ? line : path.join(absoluteCwd, line);
     })
@@ -97,9 +92,7 @@ export async function run(): Promise<void> {
   const inputs = readInputs();
   const cwd = path.resolve(inputs.workingDirectory);
 
-  core.info(
-    `mermaid-validation-action scanning ${inputs.files} in ${cwd}`,
-  );
+  core.info(`mermaid-validation-action scanning ${inputs.files} in ${cwd}`);
 
   const files = await resolveFiles(inputs.files, cwd);
   core.info(`Resolved ${files.length} Markdown file(s) to scan`);
@@ -166,6 +159,6 @@ export async function run(): Promise<void> {
 }
 
 run().catch((err) => {
-  const msg = err instanceof Error ? err.stack ?? err.message : String(err);
+  const msg = err instanceof Error ? (err.stack ?? err.message) : String(err);
   core.setFailed(`Unhandled error: ${msg}`);
 });

@@ -18,7 +18,7 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write   # only if you want the sticky PR comment
+  pull-requests: write # only if you want the sticky PR comment
 
 jobs:
   validate:
@@ -28,17 +28,17 @@ jobs:
       - uses: sgerrand/mermaid-validation-action@v0
 ```
 
-That's it. On every PR that touches Markdown, the action scans `**/*.md`, validates every ```` ```mermaid ```` block, and fails the job if any block has a syntax error.
+That's it. On every PR that touches Markdown, the action scans `**/*.md`, validates every ` ```mermaid ` block, and fails the job if any block has a syntax error.
 
 ## Inputs
 
-| Input | Default | Description |
-| --- | --- | --- |
-| `files` | `**/*.md` | Newline-separated glob patterns. Supports `!` negation. |
-| `working-directory` | `.` | Directory to resolve globs against. |
-| `fail-on-warning` | `false` | If `true`, treat warnings (e.g. unknown diagram type) as failures. |
-| `comment-on-pr` | `true` | Post or update a sticky PR comment with the validation summary. Requires `pull-requests: write`. |
-| `github-token` | `${{ github.token }}` | Token used for the sticky comment. |
+| Input               | Default               | Description                                                                                      |
+| ------------------- | --------------------- | ------------------------------------------------------------------------------------------------ |
+| `files`             | `**/*.md`             | Newline-separated glob patterns. Supports `!` negation.                                          |
+| `working-directory` | `.`                   | Directory to resolve globs against.                                                              |
+| `fail-on-warning`   | `false`               | If `true`, treat warnings (e.g. unknown diagram type) as failures.                               |
+| `comment-on-pr`     | `true`                | Post or update a sticky PR comment with the validation summary. Requires `pull-requests: write`. |
+| `github-token`      | `${{ github.token }}` | Token used for the sticky comment.                                                               |
 
 ### Globs
 
@@ -53,12 +53,12 @@ That's it. On every PR that touches Markdown, the action scans `**/*.md`, valida
 
 ## Outputs
 
-| Output | Description |
-| --- | --- |
-| `error-count` | Number of diagrams that failed validation. |
+| Output          | Description                                |
+| --------------- | ------------------------------------------ |
+| `error-count`   | Number of diagrams that failed validation. |
 | `warning-count` | Number of diagrams that produced warnings. |
-| `file-count` | Number of Markdown files scanned. |
-| `block-count` | Number of mermaid code blocks found. |
+| `file-count`    | Number of Markdown files scanned.          |
+| `block-count`   | Number of mermaid code blocks found.       |
 
 ```yaml
 - uses: sgerrand/mermaid-validation-action@v0
@@ -79,7 +79,7 @@ Add `pull-requests: write` if you want the sticky PR comment. When the action ca
 
 ## How it works
 
-1. Each Markdown file is parsed with `remark-parse` to find ```` ```mermaid ```` fenced code blocks.
+1. Each Markdown file is parsed with `remark-parse` to find ` ```mermaid ` fenced code blocks.
 2. Each block's text is handed to `mermaid.parse()`, which uses the official Mermaid grammar — the same one GitHub uses to render.
 3. A small `happy-dom` polyfill provides the DOM globals Mermaid expects, so no headless browser is needed.
 4. Failures become `::error file=...,line=...::` annotations anchored back to the source Markdown line, plus a Markdown table in `GITHUB_STEP_SUMMARY` and an upserted sticky PR comment marked with `<!-- mermaid-validation-action -->`.

@@ -83,7 +83,10 @@ export function renderCommentBody(
     }
   }
 
-  lines.push(``, `_Last updated ${isoTimestamp} by mermaid-validation-action._`);
+  lines.push(
+    ``,
+    `_Last updated ${isoTimestamp} by mermaid-validation-action._`,
+  );
   return lines.join('\n');
 }
 
