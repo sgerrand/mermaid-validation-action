@@ -1,0 +1,13 @@
+node_modules/
+*.log
+.DS_Store
+coverage/
+.vscode/
+.idea/
+*.tsbuildinfo
+
+# Bun
+.bun/
+
+# Keep dist/ checked in — required for JS GitHub Actions
+!dist/
