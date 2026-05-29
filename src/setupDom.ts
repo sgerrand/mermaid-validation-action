@@ -1,4 +1,4 @@
-import { JSDOM } from 'jsdom';
+import { Window } from 'happy-dom';
 
 let installed = false;
 
@@ -6,26 +6,37 @@ export function setupDom(): void {
   if (installed) return;
   installed = true;
 
-  const dom = new JSDOM('<!doctype html><html><body></body></html>', {
-    url: 'http://localhost/',
-    pretendToBeVisual: true,
-  });
+  const win = new Window({ url: 'http://localhost/' });
+  const doc = win.document;
 
   const g = globalThis as unknown as Record<string, unknown>;
-  g.window = dom.window;
-  g.document = dom.window.document;
-  g.navigator = dom.window.navigator;
-  g.HTMLElement = dom.window.HTMLElement;
-  g.Element = dom.window.Element;
-  g.Node = dom.window.Node;
-  g.SVGElement = dom.window.SVGElement;
-  g.DOMParser = dom.window.DOMParser;
-  g.XMLSerializer = dom.window.XMLSerializer;
-  g.getComputedStyle = dom.window.getComputedStyle.bind(dom.window);
-  g.requestAnimationFrame = (cb: FrameRequestCallback): number => {
-    return setTimeout(() => cb(Date.now()), 0) as unknown as number;
+
+  const assign = (key: string, value: unknown): void => {
+    try {
+      g[key] = value;
+    } catch {
+      // Property is non-writable on this Node version (e.g. navigator on Node 21+).
+      // The host's built-in value is fine for mermaid's purposes.
+    }
   };
-  g.cancelAnimationFrame = (id: number): void => {
-    clearTimeout(id);
-  };
+
+  assign('window', win);
+  assign('document', doc);
+  assign('navigator', win.navigator);
+  assign('HTMLElement', win.HTMLElement);
+  assign('Element', win.Element);
+  assign('Node', win.Node);
+  assign('SVGElement', win.SVGElement);
+  assign('DOMParser', win.DOMParser);
+  assign('XMLSerializer', win.XMLSerializer);
+  assign('getComputedStyle', win.getComputedStyle.bind(win));
+
+  if (typeof g.requestAnimationFrame !== 'function') {
+    assign('requestAnimationFrame', (cb: FrameRequestCallback): number => {
+      return setTimeout(() => cb(Date.now()), 0) as unknown as number;
+    });
+    assign('cancelAnimationFrame', (id: number): void => {
+      clearTimeout(id);
+    });
+  }
 }

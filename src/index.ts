@@ -35,15 +35,27 @@ async function resolveFiles(
   patterns: string,
   cwd: string,
 ): Promise<string[]> {
-  const globber = await glob.create(patterns, {
+  const absoluteCwd = path.resolve(cwd);
+  const lines = patterns
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0);
+  const rooted = lines
+    .map((line) => {
+      if (line.startsWith('!')) {
+        const body = line.slice(1);
+        return path.isAbsolute(body) ? line : `!${path.join(absoluteCwd, body)}`;
+      }
+      return path.isAbsolute(line) ? line : path.join(absoluteCwd, line);
+    })
+    .join('\n');
+
+  const globber = await glob.create(rooted, {
     matchDirectories: false,
     implicitDescendants: false,
   });
   const all = await globber.glob();
-  const absoluteCwd = path.resolve(cwd);
-  return all
-    .filter((p) => p.startsWith(absoluteCwd))
-    .filter((p) => p.toLowerCase().endsWith('.md'));
+  return all.filter((p) => p.toLowerCase().endsWith('.md'));
 }
 
 function toRelative(absolute: string, cwd: string): string {
