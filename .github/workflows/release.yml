@@ -1,0 +1,14 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  release-please:
+    uses: release-mate/action/.github/workflows/release-please.yml@v1.1.1
+    secrets:
+      client-id: ${{ secrets.RELEASE_MATE_CLIENT_ID }}
+      app-private-key: ${{ secrets.RELEASE_MATE_PRIVATE_KEY }}

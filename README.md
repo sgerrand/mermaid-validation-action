@@ -105,6 +105,21 @@ The `dist/index.js` bundle is checked in because Node-based GitHub Actions run f
 - Custom lint rules beyond pure syntax.
 - `.mdx` support.
 
+## Releases
+
+Releases are automated by [release-please](https://github.com/googleapis/release-please) via [release-mate/action](https://github.com/release-mate/action), driven by Conventional Commits.
+
+- Every push to `main` opens or updates a release PR with a generated CHANGELOG and version bump.
+- Merging the release PR cuts a new GitHub Release and tag (e.g. `v0.2.0`).
+- `.github/workflows/publish.yml` then runs [`actions/publish-action`](https://github.com/actions/publish-action), which force-moves the matching `vMAJOR` and `vMAJOR.MINOR` tags so consumers pinning `@v0` always get the latest compatible release.
+
+Two organisation/repository secrets are required for the release workflow:
+
+- `RELEASE_MATE_CLIENT_ID` — Release Mate GitHub App client ID.
+- `RELEASE_MATE_PRIVATE_KEY` — PEM-encoded private key for the same App.
+
+See [release-mate/action](https://github.com/release-mate/action) for App installation instructions.
+
 ## License
 
 BSD 2-Clause — see [LICENSE](LICENSE).
