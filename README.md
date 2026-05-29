@@ -25,8 +25,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: sgerrand/mermaid-validation-action@v0
+      - uses: sgerrand/mermaid-validation-action@v0 # x-release-please-major
 ```
+
+Current version: `v0.1.0` <!-- x-release-please-version -->.
 
 That's it. On every PR that touches Markdown, the action scans `**/*.md`, validates every fenced `mermaid` block, and fails the job if any block has a syntax error.
 
@@ -43,7 +45,7 @@ That's it. On every PR that touches Markdown, the action scans `**/*.md`, valida
 ### Globs
 
 ```yaml
-- uses: sgerrand/mermaid-validation-action@v0
+- uses: sgerrand/mermaid-validation-action@v0 # x-release-please-major
   with:
     files: |
       docs/**/*.md
@@ -61,7 +63,7 @@ That's it. On every PR that touches Markdown, the action scans `**/*.md`, valida
 | `block-count`   | Number of mermaid code blocks found.       |
 
 ```yaml
-- uses: sgerrand/mermaid-validation-action@v0
+- uses: sgerrand/mermaid-validation-action@v0 # x-release-please-major
   id: mermaid
 - run: echo "Found ${{ steps.mermaid.outputs.block-count }} diagrams"
 ```

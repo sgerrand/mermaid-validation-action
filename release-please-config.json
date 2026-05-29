@@ -22,7 +22,12 @@
   "packages": {
     ".": {
       "package-name": "mermaid-validation-action",
-      "extra-files": []
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "README.md"
+        }
+      ]
     }
   }
 }
