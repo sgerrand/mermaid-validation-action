@@ -1,0 +1,14 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Bundled dist/ contains minified third-party code that gitleaks flags as false-positive secrets"
+paths = [
+  '''^dist/.*''',
+]
+
+[[allowlists]]
+description = "Bun lockfile contains content hashes that match generic-api-key patterns"
+paths = [
+  '''^bun\.lock$''',
+]

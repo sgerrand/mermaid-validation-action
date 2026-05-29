@@ -1,4 +1,4 @@
-name: release
+name: Release
 
 on:
   push:
@@ -8,6 +8,7 @@ permissions: {}
 
 jobs:
   release-please:
+    name: Release Please
     uses: release-mate/action/.github/workflows/release-please.yml@v1.1.1
     secrets:
       client-id: ${{ secrets.RELEASE_MATE_CLIENT_ID }}
