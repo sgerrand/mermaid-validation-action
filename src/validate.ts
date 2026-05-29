@@ -1,3 +1,4 @@
+import type { Mermaid } from 'mermaid';
 import { setupDom } from './setupDom.js';
 
 export interface ValidateOk {
@@ -15,9 +16,9 @@ export interface ValidateError {
 
 export type ValidateResult = ValidateOk | ValidateError;
 
-let mermaidInstance: typeof import('mermaid').default | null = null;
+let mermaidInstance: Mermaid | null = null;
 
-async function getMermaid(): Promise<typeof import('mermaid').default> {
+async function getMermaid(): Promise<Mermaid> {
   if (mermaidInstance) return mermaidInstance;
   setupDom();
   const mod = await import('mermaid');
