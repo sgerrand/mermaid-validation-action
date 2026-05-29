@@ -99,6 +99,21 @@ bun run build
 
 The `dist/index.js` bundle is checked in because Node-based GitHub Actions run from the repo state at the ref they're pinned to — there is no `bun install` step on the runner. CI fails if `dist/` drifts from `src/`.
 
+### Local hooks
+
+`bun install` wires up [lefthook](https://github.com/evilmartians/lefthook) automatically via the `prepare` script. The hooks call three Rust binaries that are not on npm — install them once via Homebrew:
+
+```bash
+brew install gitleaks mado
+brew install crate-ci/committed/committed
+```
+
+- `gitleaks` — scans staged content for secrets on every commit.
+- `mado` — markdownlint-compatible Markdown lint.
+- `committed` — Conventional Commits check on commit messages.
+
+If any of these is missing the matching hook fails fast; the rest still run.
+
 ## Roadmap
 
 - Render-mode opt-in (`mode: render`) backed by `mmdc` for layout-level validation.
