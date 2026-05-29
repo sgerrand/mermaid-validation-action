@@ -1,0 +1,42 @@
+name: 'Mermaid Validation'
+description: 'Validate Mermaid diagrams in Markdown files. Fails the build on syntax errors.'
+author: 'sgerrand'
+branding:
+  icon: 'check-circle'
+  color: 'purple'
+
+inputs:
+  files:
+    description: 'Glob(s) of Markdown files to scan. Newline-separated. Supports ! negation.'
+    required: false
+    default: '**/*.md'
+  working-directory:
+    description: 'Directory to resolve globs against.'
+    required: false
+    default: '.'
+  fail-on-warning:
+    description: 'Treat warnings (e.g. unknown diagram type) as failures.'
+    required: false
+    default: 'false'
+  comment-on-pr:
+    description: 'Post or update a sticky comment on the PR with the validation summary. Requires pull-requests: write.'
+    required: false
+    default: 'true'
+  github-token:
+    description: 'Token used for the PR sticky comment. Defaults to the workflow token.'
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  error-count:
+    description: 'Number of diagrams that failed validation.'
+  warning-count:
+    description: 'Number of diagrams that produced warnings.'
+  file-count:
+    description: 'Number of Markdown files scanned.'
+  block-count:
+    description: 'Number of mermaid code blocks found.'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
