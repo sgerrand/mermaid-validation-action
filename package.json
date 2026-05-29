@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "GitHub Action that validates Mermaid diagrams in Markdown files",
-  "license": "MIT",
+  "license": "BSD-2-Clause",
   "engines": {
     "node": ">=20"
   },
