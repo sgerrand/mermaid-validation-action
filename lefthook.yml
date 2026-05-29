@@ -1,0 +1,79 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: typecheck
+      glob: 'src/**/*.ts'
+      run: bun run typecheck
+
+    - name: test
+      run: bun test --bail
+
+    - name: format
+      glob: '*.{ts,js,mjs,cjs,json,yml,yaml,md}'
+      run: bunx prettier --check {staged_files}
+
+    - name: lint
+      glob: 'src/**/*.ts'
+      run: bunx eslint --max-warnings 0 {staged_files}
+
+    - name: markdown
+      glob: '*.md'
+      exclude:
+        - tests/fixtures/**
+        - CHANGELOG.md
+      run: mado check {staged_files}
+
+    - name: dist-sync
+      run: |
+        set -e
+        if git diff --cached --name-only | grep -q '^src/'; then
+          if ! git diff --cached --name-only | grep -q '^dist/'; then
+            echo 'src/ staged but dist/ not. Run: bun run build && git add dist/'
+            exit 1
+          fi
+        fi
+
+    - name: secrets
+      run: gitleaks protect --staged --redact --no-banner
+
+    - name: large-files
+      run: |
+        oversized=$(git diff --cached --name-only --diff-filter=ACM \
+          | grep -v '^dist/' \
+          | while read -r f; do
+              if [ -f "$f" ]; then
+                size=$(wc -c < "$f")
+                if [ "$size" -gt 524288 ]; then
+                  echo "$f ($size bytes)"
+                fi
+              fi
+            done)
+        if [ -n "$oversized" ]; then
+          echo 'Staged files >512KB outside dist/:'
+          echo "$oversized"
+          exit 1
+        fi
+
+commit-msg:
+  jobs:
+    - name: committed
+      run: committed --commit-file {1}
+
+pre-push:
+  parallel: false
+  jobs:
+    - name: typecheck-full
+      run: bun run typecheck
+
+    - name: test-full
+      run: bun test
+
+    - name: build-clean
+      run: |
+        set -e
+        bun run build
+        if [ -n "$(git status --porcelain dist/)" ]; then
+          echo 'dist/ drifted after rebuild. Commit the rebuild first.'
+          git --no-pager diff dist/ | head -50
+          exit 1
+        fi

@@ -14,6 +14,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
+    "prepare": "lefthook install || true",
     "all": "bun run typecheck && bun run lint && bun test && bun run build"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "@types/node": "^20.19.0",
     "esbuild": "^0.28.0",
     "eslint": "^10.4.0",
+    "lefthook": "^2.1.9",
     "prettier": "^3.8.3",
     "typescript": "^5.9.0",
     "typescript-eslint": "^8.60.0"
