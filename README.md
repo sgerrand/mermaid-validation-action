@@ -28,7 +28,7 @@ jobs:
       - uses: sgerrand/mermaid-validation-action@v0
 ```
 
-That's it. On every PR that touches Markdown, the action scans `**/*.md`, validates every ` ```mermaid ` block, and fails the job if any block has a syntax error.
+That's it. On every PR that touches Markdown, the action scans `**/*.md`, validates every fenced `mermaid` block, and fails the job if any block has a syntax error.
 
 ## Inputs
 
@@ -79,7 +79,7 @@ Add `pull-requests: write` if you want the sticky PR comment. When the action ca
 
 ## How it works
 
-1. Each Markdown file is parsed with `remark-parse` to find ` ```mermaid ` fenced code blocks.
+1. Each Markdown file is parsed with `remark-parse` to find fenced `mermaid` code blocks.
 2. Each block's text is handed to `mermaid.parse()`, which uses the official Mermaid grammar — the same one GitHub uses to render.
 3. A small `happy-dom` polyfill provides the DOM globals Mermaid expects, so no headless browser is needed.
 4. Failures become `::error file=...,line=...::` annotations anchored back to the source Markdown line, plus a Markdown table in `GITHUB_STEP_SUMMARY` and an upserted sticky PR comment marked with `<!-- mermaid-validation-action -->`.

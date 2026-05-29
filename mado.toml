@@ -1,0 +1,53 @@
+[lint]
+respect-gitignore = true
+output-format = "concise"
+exclude = [
+  "node_modules",
+  "dist",
+  "tests/fixtures",
+  "CHANGELOG.md",
+]
+rules = [
+  "MD001",
+  "MD003",
+  "MD004",
+  "MD005",
+  "MD007",
+  "MD009",
+  "MD010",
+  "MD012",
+  "MD018",
+  "MD019",
+  "MD020",
+  "MD021",
+  "MD022",
+  "MD023",
+  "MD024",
+  "MD025",
+  "MD026",
+  "MD027",
+  "MD028",
+  "MD029",
+  "MD030",
+  "MD031",
+  "MD032",
+  "MD034",
+  "MD035",
+  "MD036",
+  "MD037",
+  "MD038",
+  "MD039",
+  "MD040",
+  "MD041",
+  "MD046",
+  "MD047",
+]
+
+[lint.md024]
+allow-different-nesting = true
+
+[lint.md029]
+style = "ordered"
+
+[lint.md046]
+style = "fenced"
