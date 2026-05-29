@@ -1,0 +1,11 @@
+# Class diagram fixture
+
+```mermaid
+classDiagram
+  class Animal {
+    +String name
+    +eat()
+  }
+  class Dog
+  Animal <|-- Dog
+```

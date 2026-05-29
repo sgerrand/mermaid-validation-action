@@ -1,0 +1,25 @@
+name: self-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dogfood:
+    name: Validate this repository's own Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          files: |
+            **/*.md
+            !node_modules/**
+            !tests/fixtures/invalid/**
+          comment-on-pr: 'true'

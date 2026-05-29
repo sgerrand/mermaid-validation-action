@@ -1,0 +1,68 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck
+      - run: bun test
+      - run: bun run build
+      - name: Fail if dist/ is dirty
+        run: |
+          if [[ -n "$(git status --porcelain dist/)" ]]; then
+            echo "::error::dist/ is out of sync. Run 'bun run build' and commit the result."
+            git --no-pager diff dist/ | head -200
+            exit 1
+          fi
+
+  e2e-valid:
+    name: E2E — valid fixtures pass
+    runs-on: ubuntu-latest
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        id: validate
+        with:
+          files: '**/*.md'
+          working-directory: tests/fixtures/valid
+          comment-on-pr: 'false'
+      - name: Assert outputs
+        run: |
+          test "${{ steps.validate.outputs.error-count }}" = "0"
+          test "${{ steps.validate.outputs.warning-count }}" = "0"
+          test "${{ steps.validate.outputs.file-count }}" -gt "0"
+          test "${{ steps.validate.outputs.block-count }}" -gt "0"
+
+  e2e-invalid:
+    name: E2E — invalid fixtures fail
+    runs-on: ubuntu-latest
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        id: validate
+        continue-on-error: true
+        with:
+          files: '**/*.md'
+          working-directory: tests/fixtures/invalid
+          comment-on-pr: 'false'
+      - name: Assert action failed and reported errors
+        run: |
+          test "${{ steps.validate.outcome }}" = "failure"
+          test "${{ steps.validate.outputs.error-count }}" -gt "0"
