@@ -70,6 +70,41 @@ describe('renderCommentBody', () => {
     expect(body).toContain('Unknown diagram type \\| weird');
   });
 
+  it('escapes backslashes before pipes so prefix escapes cannot break the table', () => {
+    const trickyFailures: Failure[] = [
+      {
+        file: 'a.md',
+        line: 1,
+        message: 'bad \\| injected | here',
+        severity: 'error',
+      },
+    ];
+    const body = renderCommentBody(
+      trickyFailures,
+      { fileCount: 1, blockCount: 1, errorCount: 1, warningCount: 0 },
+      '2026-05-29T00:00:00Z',
+    );
+    expect(body).toContain('bad \\\\\\| injected \\| here');
+    expect(body).not.toContain('bad \\| injected');
+  });
+
+  it('collapses CRLF and multiple newlines into a single space', () => {
+    const multiline: Failure[] = [
+      {
+        file: 'a.md',
+        line: 1,
+        message: 'line1\r\n\nline2\n\n\nline3',
+        severity: 'error',
+      },
+    ];
+    const body = renderCommentBody(
+      multiline,
+      { fileCount: 1, blockCount: 1, errorCount: 1, warningCount: 0 },
+      '2026-05-29T00:00:00Z',
+    );
+    expect(body).toContain('line1 line2 line3');
+  });
+
   it('includes timestamp footer', () => {
     const body = renderCommentBody([], emptyStats, '2026-05-29T12:34:56Z');
     expect(body).toContain('Last updated 2026-05-29T12:34:56Z');

@@ -3,6 +3,13 @@ import type { Failure, ValidationStats } from './types.js';
 
 export const COMMENT_SENTINEL = '<!-- mermaid-validation-action -->';
 
+function escapeCell(value: string): string {
+  return value
+    .replace(/\\/g, '\\\\')
+    .replace(/\|/g, '\\|')
+    .replace(/\r?\n+/g, ' ');
+}
+
 export function emitAnnotations(failures: Failure[]): void {
   for (const f of failures) {
     const props = {
@@ -74,7 +81,7 @@ export function renderCommentBody(
       `| --- | --- | --- | --- | --- |`,
     );
     for (const f of failures) {
-      const msg = f.message.replace(/\|/g, '\\|').replace(/\n+/g, ' ');
+      const msg = escapeCell(f.message);
       lines.push(
         `| \`${f.file}\` | ${f.line} | ${f.severity} | ${
           f.diagramType ?? '—'
