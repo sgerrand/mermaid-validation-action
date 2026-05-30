@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: sgerrand/mermaid-validation-action@v0.2.0-alpha.1
+      - uses: sgerrand/mermaid-validation-action@v0.2.0
 ```
 
 <!-- x-release-please-end -->
@@ -51,7 +51,7 @@ That's it. On every PR that touches Markdown, the action scans `**/*.md`, valida
 <!-- x-release-please-start -->
 
 ```yaml
-- uses: sgerrand/mermaid-validation-action@v0.2.0-alpha.1
+- uses: sgerrand/mermaid-validation-action@v0.2.0
   with:
     files: |
       docs/**/*.md
@@ -73,7 +73,7 @@ That's it. On every PR that touches Markdown, the action scans `**/*.md`, valida
 <!-- x-release-please-start -->
 
 ```yaml
-- uses: sgerrand/mermaid-validation-action@v0.2.0-alpha.1
+- uses: sgerrand/mermaid-validation-action@v0.2.0
   id: mermaid
 - run: echo "Found ${{ steps.mermaid.outputs.block-count }} diagrams"
 ```
