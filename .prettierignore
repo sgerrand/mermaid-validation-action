@@ -5,3 +5,4 @@ bun.lock
 .bun/
 coverage/
 tests/fixtures/
+CHANGELOG.md
