@@ -32,7 +32,7 @@ jobs:
 
 <!-- x-release-please-end -->
 
-Current version: `v0.2.0-alpha.1` <!-- x-release-please-version -->.
+Current version: `v0.2.0` <!-- x-release-please-version -->.
 
 That's it. On every PR that touches Markdown, the action scans `**/*.md`, validates every fenced `mermaid` block, and fails the job if any block has a syntax error.
 
