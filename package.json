@@ -1,6 +1,6 @@
 {
   "name": "mermaid-validation-action",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0",
   "private": true,
   "description": "GitHub Action that validates Mermaid diagrams in Markdown files",
   "license": "BSD-2-Clause",

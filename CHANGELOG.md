@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/sgerrand/mermaid-validation-action/compare/v0.2.0-alpha.1...v0.2.0) (2026-05-30)
+
+
+### Features
+
+* **build:** drop EOL Node 20, target Node 24 as the action runtime ([0327ecc](https://github.com/sgerrand/mermaid-validation-action/commit/0327eccede355c602dc126b970cfaabc567cfd4c))
+
 ## [0.1.0](https://github.com/sgerrand/mermaid-validation-action/compare/v0.1.0...v0.1.0) (2026-05-30)
 
 
