@@ -8,6 +8,8 @@ A GitHub Action that validates [Mermaid](https://mermaid.js.org/) diagrams embed
 
 ## Quickstart
 
+<!-- x-release-please-start-major -->
+
 ```yaml
 # .github/workflows/mermaid.yml
 name: mermaid
@@ -25,8 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: sgerrand/mermaid-validation-action@v0 # x-release-please-major
+      - uses: sgerrand/mermaid-validation-action@v0
 ```
+
+<!-- x-release-please-end -->
 
 Current version: `v0.1.0` <!-- x-release-please-version -->.
 
@@ -44,14 +48,18 @@ That's it. On every PR that touches Markdown, the action scans `**/*.md`, valida
 
 ### Globs
 
+<!-- x-release-please-start-major -->
+
 ```yaml
-- uses: sgerrand/mermaid-validation-action@v0 # x-release-please-major
+- uses: sgerrand/mermaid-validation-action@v0
   with:
     files: |
       docs/**/*.md
       README.md
       !docs/archive/**
 ```
+
+<!-- x-release-please-end -->
 
 ## Outputs
 
@@ -62,11 +70,15 @@ That's it. On every PR that touches Markdown, the action scans `**/*.md`, valida
 | `file-count`    | Number of Markdown files scanned.          |
 | `block-count`   | Number of mermaid code blocks found.       |
 
+<!-- x-release-please-start-major -->
+
 ```yaml
-- uses: sgerrand/mermaid-validation-action@v0 # x-release-please-major
+- uses: sgerrand/mermaid-validation-action@v0
   id: mermaid
 - run: echo "Found ${{ steps.mermaid.outputs.block-count }} diagrams"
 ```
+
+<!-- x-release-please-end -->
 
 ## Permissions
 
