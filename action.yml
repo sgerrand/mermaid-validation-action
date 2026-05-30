@@ -38,5 +38,5 @@ outputs:
     description: 'Number of mermaid code blocks found.'
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'
