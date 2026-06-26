@@ -9,7 +9,7 @@ permissions: {}
 jobs:
   release-please:
     name: Release Please
-    uses: release-mate/action/.github/workflows/release-please.yml@v1.1.1
+    uses: release-mate/action/.github/workflows/release-please.yml@v1.2.0
     secrets:
       client-id: ${{ secrets.RELEASE_MATE_CLIENT_ID }}
       app-private-key: ${{ secrets.RELEASE_MATE_PRIVATE_KEY }}
