@@ -16,7 +16,7 @@ content-type/dist/index.js:
 dompurify/dist/purify.es.mjs:
   /*! @license DOMPurify 3.4.7 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.4.7/LICENSE */
 
-mermaid/dist/chunks/mermaid.core/chunk-XPW4576I.mjs:
+mermaid/dist/chunks/mermaid.core/chunk-ZIRB5QZD.mjs:
   /*! Bundled license information:
   
   js-yaml/dist/js-yaml.mjs:
@@ -50,7 +50,7 @@ cytoscape/dist/cytoscape.esm.mjs:
   /*! Bezier curve function generator. Copyright Gaetan Renaudeau. MIT License: http://en.wikipedia.org/wiki/MIT_License */
   /*! Runge-Kutta spring physics function generator. Adapted from Framer.js, copyright Koen Bok. MIT License: http://en.wikipedia.org/wiki/MIT_License */
 
-@mermaid-js/parser/dist/chunks/mermaid-parser.core/chunk-NNHCCRGN.mjs:
+@mermaid-js/parser/dist/chunks/mermaid-parser.core/chunk-KEIR6QF5.mjs:
   /*! Bundled license information:
   
   lodash-es/lodash.js:

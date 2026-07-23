@@ -1,14 +1,9 @@
 [extend]
 useDefault = true
 
-[[allowlists]]
-description = "Bundled dist/ contains minified third-party code that gitleaks flags as false-positive secrets"
+[allowlist]
+description = "Files with minified or generated content that triggers false-positive secret detections"
 paths = [
-  '''^dist/.*''',
-]
-
-[[allowlists]]
-description = "Bun lockfile contains content hashes that match generic-api-key patterns"
-paths = [
+  '''^dist/''',
   '''^bun\.lock$''',
 ]
