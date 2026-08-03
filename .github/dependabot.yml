@@ -28,7 +28,12 @@ updates:
       esbuild:
         patterns:
           - esbuild
-      node:
+      runtime:
+        dependency-type: production
+        patterns:
+          - '*'
+      dev:
+        dependency-type: development
         patterns:
           - '*'
         exclude-patterns:
