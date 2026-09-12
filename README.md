@@ -146,7 +146,8 @@ Releases are automated by [release-please](https://github.com/googleapis/release
 
 - Every push to `main` opens or updates a release PR with a generated CHANGELOG and version bump.
 - Merging the release PR cuts a new GitHub Release and tag (e.g. `v0.2.0`).
-- `.github/workflows/publish.yml` then runs [`actions/publish-action`](https://github.com/actions/publish-action), which force-moves the matching `vMAJOR` and `vMAJOR.MINOR` tags so consumers pinning `@v0` always get the latest compatible release.
+- `.github/workflows/publish.yml` then builds the bundle, commits `dist/` on top of that tag, and force-moves the tag onto the new commit.
+- It then runs [`actions/publish-action`](https://github.com/actions/publish-action), which force-moves the matching `vMAJOR` tag so consumers pinning `@v0` always get the latest compatible release. There is no `vMAJOR.MINOR` alias: pin `@v0` or an exact release tag such as `@v0.2.0`.
 
 Two organisation/repository secrets are required for the release workflow:
 
