@@ -9,5 +9,5 @@ coverage/
 # Bun
 .bun/
 
-# Keep dist/ checked in — required for JS GitHub Actions
-!dist/
+# Built at release time by .github/workflows/publish.yml, never committed to main
+dist/
