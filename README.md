@@ -111,7 +111,11 @@ bun test
 bun run build
 ```
 
-The `dist/index.js` bundle is checked in because Node-based GitHub Actions run from the repo state at the ref they're pinned to — there is no `bun install` step on the runner. CI fails if `dist/` drifts from `src/`.
+`dist/index.js` is not checked in. It is built at release time: the publish workflow checks out the new tag, builds the bundle, commits it, and moves the tag onto that commit. Every released tag therefore carries a working bundle, and `main` carries none.
+
+This matters because Node-based GitHub Actions run from the repo state at the ref they are pinned to — there is no `bun install` step on the runner. So pin this action to a release tag (`@v0`) or to the SHA of a tagged commit. A SHA from `main` will not work.
+
+`bun run build` writes `dist/` locally for testing. It is ignored by git.
 
 ### Local hooks
 
@@ -142,7 +146,8 @@ Releases are automated by [release-please](https://github.com/googleapis/release
 
 - Every push to `main` opens or updates a release PR with a generated CHANGELOG and version bump.
 - Merging the release PR cuts a new GitHub Release and tag (e.g. `v0.2.0`).
-- `.github/workflows/publish.yml` then runs [`actions/publish-action`](https://github.com/actions/publish-action), which force-moves the matching `vMAJOR` and `vMAJOR.MINOR` tags so consumers pinning `@v0` always get the latest compatible release.
+- `.github/workflows/publish.yml` then builds the bundle, commits `dist/` on top of that tag, and force-moves the tag onto the new commit.
+- It then runs [`actions/publish-action`](https://github.com/actions/publish-action), which force-moves the matching `vMAJOR` tag so consumers pinning `@v0` always get the latest compatible release. There is no `vMAJOR.MINOR` alias: pin `@v0` or an exact release tag such as `@v0.2.0`.
 
 Two organisation/repository secrets are required for the release workflow:
 

@@ -8,7 +8,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js --sourcemap --legal-comments=external",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js --legal-comments=external",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",

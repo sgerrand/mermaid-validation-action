@@ -31,23 +31,12 @@ pre-commit:
       glob: '.github/dependabot.{yml,yaml}'
       run: check-jsonschema --builtin-schema vendor.dependabot {staged_files}
 
-    - name: dist-sync
-      run: |
-        set -e
-        if git diff --cached --name-only | grep -q '^src/'; then
-          if ! git diff --cached --name-only | grep -q '^dist/'; then
-            echo 'src/ staged but dist/ not. Run: bun run build && git add dist/'
-            exit 1
-          fi
-        fi
-
     - name: secrets
       run: gitleaks protect --staged --redact --no-banner
 
     - name: large-files
       run: |
         oversized=$(git diff --cached --name-only --diff-filter=ACM \
-          | grep -v '^dist/' \
           | while read -r f; do
               if [ -f "$f" ]; then
                 size=$(wc -c < "$f")
@@ -57,7 +46,7 @@ pre-commit:
               fi
             done)
         if [ -n "$oversized" ]; then
-          echo 'Staged files >512KB outside dist/:'
+          echo 'Staged files >512KB:'
           echo "$oversized"
           exit 1
         fi
@@ -76,12 +65,5 @@ pre-push:
     - name: test-full
       run: bun test
 
-    - name: build-clean
-      run: |
-        set -e
-        bun run build
-        if [ -n "$(git status --porcelain dist/)" ]; then
-          echo 'dist/ drifted after rebuild. Commit the rebuild first.'
-          git --no-pager diff dist/ | head -50
-          exit 1
-        fi
+    - name: build
+      run: bun run build
