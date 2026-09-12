@@ -197,6 +197,6 @@ describe('upsertPrComment', () => {
       now: fixedNow,
     });
     expect(captured).toHaveLength(2);
-    expect(captured[0]).toBe(captured[1]!);
+    expect(captured[0]).toBe(captured[1]);
   });
 });

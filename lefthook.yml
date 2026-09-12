@@ -9,12 +9,17 @@ pre-commit:
       run: bun test --bail
 
     - name: format
-      glob: '*.{ts,js,mjs,cjs,json,yml,yaml,md}'
-      run: bunx prettier --check {staged_files}
+      glob: '*.{ts,js,mjs,cjs,json,jsonc}'
+      exclude:
+        - tests/fixtures/**
+        - bun.lock
+      run: bunx biome format {staged_files}
 
     - name: lint
-      glob: 'src/**/*.ts'
-      run: bunx eslint --max-warnings 0 {staged_files}
+      glob: '*.{ts,js,mjs,cjs}'
+      exclude:
+        - tests/fixtures/**
+      run: bunx biome lint --error-on-warnings {staged_files}
 
     - name: markdown
       glob: '*.md'
