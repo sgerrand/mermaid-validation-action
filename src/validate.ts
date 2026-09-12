@@ -37,7 +37,7 @@ const LINE_PATTERNS: RegExp[] = [
 function extractLine(message: string): number | undefined {
   for (const re of LINE_PATTERNS) {
     const m = message.match(re);
-    if (m && m[1]) {
+    if (m?.[1]) {
       const n = Number.parseInt(m[1], 10);
       if (Number.isFinite(n) && n > 0) return n;
     }
