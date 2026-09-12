@@ -111,7 +111,11 @@ bun test
 bun run build
 ```
 
-The `dist/index.js` bundle is checked in because Node-based GitHub Actions run from the repo state at the ref they're pinned to — there is no `bun install` step on the runner. CI fails if `dist/` drifts from `src/`.
+`dist/index.js` is not checked in. It is built at release time: the publish workflow checks out the new tag, builds the bundle, commits it, and moves the tag onto that commit. Every released tag therefore carries a working bundle, and `main` carries none.
+
+This matters because Node-based GitHub Actions run from the repo state at the ref they are pinned to — there is no `bun install` step on the runner. So pin this action to a release tag (`@v0`) or to the SHA of a tagged commit. A SHA from `main` will not work.
+
+`bun run build` writes `dist/` locally for testing. It is ignored by git.
 
 ### Local hooks
 
