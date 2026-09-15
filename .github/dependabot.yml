@@ -21,9 +21,11 @@ updates:
       interval: weekly
     cooldown:
       default-days: 7
+    # `deps` is a releasing type: see release-please-config.json. The prefix
+    # cannot vary per group, and bun does not support prefix-development, so
+    # development updates cut a release too.
     commit-message:
       prefix: deps
-      prefix-development: build
       include: scope
     groups:
       esbuild:
