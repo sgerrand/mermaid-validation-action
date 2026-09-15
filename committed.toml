@@ -10,6 +10,7 @@ allowed_types = [
   "fix",
   "perf",
   "revert",
+  "deps",
   "docs",
   "build",
   "ci",
