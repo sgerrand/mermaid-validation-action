@@ -10,6 +10,7 @@
     { "type": "fix", "section": "Bug Fixes" },
     { "type": "perf", "section": "Performance" },
     { "type": "revert", "section": "Reverts" },
+    { "type": "deps", "section": "Dependencies" },
     { "type": "docs", "section": "Documentation" },
     { "type": "build", "section": "Build System", "hidden": true },
     { "type": "ci", "section": "Continuous Integration", "hidden": true },
