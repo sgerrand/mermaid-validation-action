@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.1](https://github.com/sgerrand/mermaid-validation-action/compare/v0.2.0...v0.2.1) (2026-10-16)
+
+
+### Dependencies
+
+* **deps-dev:** bump the dev group with 3 updates ([#29](https://github.com/sgerrand/mermaid-validation-action/issues/29)) ([a313d32](https://github.com/sgerrand/mermaid-validation-action/commit/a313d3228b85c9aa2840d26bafcc63358766089f))
+* **deps:** bump the runtime group across 1 directory with 2 updates ([#31](https://github.com/sgerrand/mermaid-validation-action/issues/31)) ([0a88ba0](https://github.com/sgerrand/mermaid-validation-action/commit/0a88ba09b97ccd859b88acb808e249d9031802b6))
+* **deps:** bump the runtime group with 2 updates ([#25](https://github.com/sgerrand/mermaid-validation-action/issues/25)) ([05f07af](https://github.com/sgerrand/mermaid-validation-action/commit/05f07af74e23fa5570eb8ec789cd84c5fb6291c0))
+
 ## [0.2.0](https://github.com/sgerrand/mermaid-validation-action/compare/v0.2.0-alpha.1...v0.2.0) (2026-05-30)
 
 
